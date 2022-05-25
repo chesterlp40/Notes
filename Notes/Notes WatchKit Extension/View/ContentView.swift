@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     // MARK: - Properties Section
     
     @State private var notes = [Note]()
@@ -51,6 +52,7 @@ struct ContentView: View {
     }
     
     // MARK: - Body Section
+    
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 6) {
@@ -80,16 +82,26 @@ struct ContentView: View {
             if self.notes.count >= 1 {
                 List {
                     ForEach(0..<self.notes.count, id: \.self) { note in
-                        HStack {
-                            Capsule()
-                                .frame(width: 4)
-                                .foregroundColor(.accentColor)
-                            Text(self.notes[note].text)
-                                .lineLimit(1)
-                                .padding(.leading, 5)
-                        } //: HSTACK
+                        NavigationLink(
+                            destination: DetailView(
+                                note: self.notes[note],
+                                count: self.notes.count,
+                                index: note
+                            )
+                        ) {
+                            HStack {
+                                Capsule()
+                                    .frame(width: 4)
+                                    .foregroundColor(.accentColor)
+                                Text(self.notes[note].text)
+                                    .lineLimit(1)
+                                    .padding(.leading, 5)
+                            } //: HSTACK
+                        }
                     } //: LOOP
-                    .onDelete(perform: self.delete(_:))
+                    .onDelete(
+                        perform: self.delete(_:)
+                    )
                 } //: LIST
             } else {
                 Spacer()
@@ -110,6 +122,7 @@ struct ContentView: View {
 }
 
 // MARK: - Preview Section
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
