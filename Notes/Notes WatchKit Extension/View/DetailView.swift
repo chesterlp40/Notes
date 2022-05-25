@@ -12,6 +12,7 @@ struct DetailView: View {
     // MARK: - Properties Section
     
     @State private var isCreditsPresented = false
+    @State private var isSettingsPresented = false
     
     let note: Note
     let count: Int
@@ -40,6 +41,12 @@ struct DetailView: View {
             HStack(alignment: .center) {
                 Image(systemName: "gear")
                     .imageScale(.large)
+                    .onTapGesture {
+                        self.isSettingsPresented.toggle()
+                    }
+                    .sheet(isPresented: self.$isSettingsPresented) {
+                        SettingsView()
+                    }
                 
                 Spacer()
                 

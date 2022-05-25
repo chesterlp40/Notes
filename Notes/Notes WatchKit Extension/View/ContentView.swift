@@ -11,6 +11,8 @@ struct ContentView: View {
     
     // MARK: - Properties Section
     
+    @AppStorage("lineCount") var lineCount = 1
+    
     @State private var notes = [Note]()
     @State private var text = ""
     
@@ -94,7 +96,7 @@ struct ContentView: View {
                                     .frame(width: 4)
                                     .foregroundColor(.accentColor)
                                 Text(self.notes[note].text)
-                                    .lineLimit(1)
+                                    .lineLimit(self.lineCount)
                                     .padding(.leading, 5)
                             } //: HSTACK
                         }
